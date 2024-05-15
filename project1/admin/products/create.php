@@ -123,6 +123,7 @@ if (!isset($_SESSION['auth']['admin'])) {
                 <input class="form-control mt-2" name='name' placeholder="Nhập tên" required />
                 <input type="number" step="1" min="0" class="form-control mt-2" name='price' placeholder="Nhập giá" required />
                 <input type="file" class="form-control mt-2" name='image_file'/>
+                <input class="form-control mt-2" name='image' placeholder="Nhập link ảnh" required />
                 <textarea row="5" class="form-control mt-2" name="description"></textarea>
                 <button type="submit" class="btn btn-primary mt-2">Tạo</button>
             </form>

@@ -3,18 +3,15 @@
 # Không có giao diện, xử lý thêm sản phẩm
 
 # B1: lấy dữ liệu
-$product_code = $_POST['product_code'];
-$name = $_POST['name'];
-$buy_price = $_POST['price'];
-$description = $_POST['description'] ?? ''; // Neu khong co mac dinh rong
-$image =$_POST['image'] ?? '';
+$email = $_POST['email'];
+$user_password = $_POST['password'];
+$phone = $_POST['phone'];
+$address = $_POST['address'] ?? ''; // Neu khong co mac dinh rong
+
 # Lấy hình ảnh và lưu lại
-$target_dir = "../../public/uploads/";
-$target_file = $target_dir . basename($_FILES["image_file"]["name"]);
 
 # Lưu ảnh tạm thời vào đường dẫn target_file
 
-move_uploaded_file($_FILES["image_file"]["tmp_name"], $target_file);
 
 # Lưu vào db
 // Ket noi CSDL
@@ -32,11 +29,10 @@ if ($conn->connect_error) {
 
 // Buoc 2: chuan bi cau lenh
 
-  $sql = "INSERT INTO products VALUES (NULL,'$product_code','$name','$buy_price',NULL,'$description','$target_file')";
-  
+$sql = "INSERT INTO customers VALUES (NULL,'$email','$user_password','$phone','$address')";
 
 $result = mysqli_query($conn, $sql);
 // Chuyen huong ve trang chu: home san pham
-header("Location: /project1/admin/products/create.php");
+header("Location: /project1/customer/home/auth/login.php");
 
 ?>

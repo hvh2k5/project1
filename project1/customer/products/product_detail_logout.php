@@ -10,7 +10,7 @@ if (isset($_SESSION['auth']['email'])) {
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "project2";
+$dbname = "project1";
 
 // Tạo kết nối
 $conn = new mysqli($servername, $username, $password, $dbname);

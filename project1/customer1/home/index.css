@@ -1,0 +1,22 @@
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    
+    /* Màu nền của header */
+    z-index: 1000;
+    /* Z-index để header hiển thị trên các phần tử khác */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Đổ bóng cho header nếu cần */
+}
+
+/* CSS cho phần content, đảm bảo nó bắt đầu ở dưới header */
+.content {
+    padding-top: 100px;
+    /* Độ cao của header, đảm bảo không bị che khuất */
+    /* Thêm margin-top: 100px; cho phần content nếu bạn không muốn sử dụng padding-top */
+}
+
+/*HEADER START*/
+  

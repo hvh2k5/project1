@@ -1,0 +1,60 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    background-color: rgb(223, 237, 250);
+}
+
+/* BANNER START */
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    /* Canh giữa hình ảnh theo chiều dọc */
+}
+
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    /* Canh giữa hình ảnh theo chiều ngang */
+}
+
+/* BANNER END */
+/* LAPTOP PRODUCT START */
+#laptop {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(40, 108, 234);
+    margin-top: 20px;
+}
+
+.zoom-img:hover {
+    transform: scale(1.1);
+    overflow: hidden;
+}
+
+/* LAPTOP PRODUCT END */
+/*HEADER START*/
+/* CSS cho phần header cố định */
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    
+    /* Màu nền của header */
+    z-index: 1000;
+    /* Z-index để header hiển thị trên các phần tử khác */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Đổ bóng cho header nếu cần */
+}
+
+/* CSS cho phần content, đảm bảo nó bắt đầu ở dưới header */
+.content {
+    padding-top: 100px;
+    /* Độ cao của header, đảm bảo không bị che khuất */
+    /* Thêm margin-top: 100px; cho phần content nếu bạn không muốn sử dụng padding-top */
+}
+
+/*HEADER START*/

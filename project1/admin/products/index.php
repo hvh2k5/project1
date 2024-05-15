@@ -30,17 +30,18 @@ $result = mysqli_query($conn, $sql);
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head><link rel="icon" href="/project1/img/logoms.png" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.0.7/datatables.min.js"></script>
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
-    <div class="d-flex min-vh-100">
+    <div class="d-flex min-vh-100 wrapper">
         <!-- SIDEBAR START -->
 
         <div class="d-flex flex-column flex-shrink-0 p-3 bg-light " style="width: 280px;">
@@ -148,7 +149,7 @@ $result = mysqli_query($conn, $sql);
         <!-- SIDEBAR END -->
 
         <!-- CONTENT START -->
-        <div class="container">
+        <div class="container scrollable right">
             <table class="table table-bordered" id="product_table">
                 <thead>
                     <tr>
