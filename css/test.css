@@ -1,0 +1,162 @@
+body {
+    font-family: Arial, sans-serif;
+}
+/* HEADER START */
+header {
+    background: linear-gradient(to top, #c2f0fe, #2290c7);/* Màu nền cho tiêu đề */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    color: #ffffff !important;                
+    font-size: 24px;                            
+    font-weight: bold;
+    margin-left: 2%;                          
+}
+
+.nav-link {
+    color: rgb(255, 255, 255) !important;                   
+}
+
+.nav-link:hover {
+    color: #a7e6ba !important;                  /* Màu khi di chuột qua liên kết điều hướng */
+}
+
+
+.btn-success {
+    background-color: #33a852;                  /* Màu nền cho nút thành công */
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #28a745;                  /* Màu nền khi di chuột qua nút thành công */
+}
+/* SEARCH START */
+.search-bar {
+    align-items: center;
+}
+
+
+
+.search-bar input {
+    border: none;
+    padding: 5px;
+    border-radius: 6px 0 0 6px;                     /* Góc bo tròn cho trường nhập liệu */
+}
+
+.search-bar button {
+    border: none;
+    padding: 5px;
+    border-radius: 0 6px 6px 0; 
+    background-color: white;                       
+    color: rgb(44, 43, 43);                                   
+}
+/* Khi màn hình có độ rộng nhỏ hơn hoặc bằng 768px */
+@media (max-width: 768px) {
+    .search-bar input {
+        display: none;
+    }
+
+    .search-bar .btn {
+        display: block;
+    }
+
+    .search-bar button {
+        background-color: transparent;
+    }
+}
+/* SEARCH END */
+/* HEADER END */
+/* MAIN START */
+
+.hero {
+    background: linear-gradient(to top, #c2f0fe, #2290c7);           
+    color: white;                        
+    text-align: center;                    
+    padding: 60px 20px;                   
+}
+
+/* .hero h1 {
+    font-size: 48px;                     
+    margin-bottom: 20px;                 
+    color: #a7e6ba;                        
+} */
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    /* Sử dụng màu gradient */
+    background: linear-gradient(to bottom, #ffffff, #f82403);
+    /* Thiết lập clip vùng nền là chữ */
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* Thiết lập màu chữ phụ cho trường hợp trình duyệt không hỗ trợ background-clip */
+    color: transparent;
+    
+    
+}
+
+.hero h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    /* Sử dụng màu gradient */
+    background: linear-gradient(to top, #f7f7f7, #020202);
+    /* Thiết lập clip vùng nền là chữ */
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* Thiết lập màu chữ phụ cho trường hợp trình duyệt không hỗ trợ background-clip */
+    color: transparent;
+    
+    
+}
+
+
+.hero p {
+    font-size: 18px;                            /* Kích thước phông chữ cho đoạn văn */
+    margin-bottom: 30px;                        /* Khoảng cách bên dưới */
+}
+
+.btn-primary {
+    background-color: #33a852;                  /* Màu nền cho nút chính */
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #28a745;              /* Màu nền khi di chuột qua nút chính */
+}
+
+.btn-outline-primary {
+    color: #33a852;                              /* Màu chữ và viền cho nút đường viền */
+    border-color: #33a852;                        /* Màu viền cho nút đường viền */
+}
+
+.btn-outline-primary:hover {
+    background-color: #33a852;                  /* Màu nền khi di chuột qua nút đường viền */
+    color: white;                                   /* Màu chữ khi di chuột qua nút đường viền */
+}
+
+.image-section {
+    display: flex;                                  /* Sử dụng flexbox để bố trí phần hình ảnh */
+    justify-content: center;                    /* Căn giữa theo chiều ngang */
+    align-items: center;                         /* Căn giữa theo chiều dọc */
+    background: linear-gradient(to top, #283c76, #2290c7);               
+    padding: 50px 20px;                         /* Khoảng cách bên trong */
+    color: white;                           
+}
+
+.image-section img {
+    max-width: 100%;           /* Chiều rộng tối đa của hình ảnh */
+    height: auto;              /* Chiều cao tự động theo tỷ lệ */
+}
+/* MAIN END */
+/* FOOTER START */
+.footer-text {
+    font-size: 14px;           /* Kích thước phông chữ cho văn bản chân trang */
+    text-align: center;         /* Căn phải văn bản */
+    color: #a7e6ba;            /* Màu chữ cho văn bản chân trang */
+    margin-top: 10px;          /* Khoảng cách bên trên */
+}
+/* FOOTER END */
+
+
