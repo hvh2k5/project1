@@ -18,7 +18,7 @@ if (isset($_POST['password'])) {
 $severname = "localhost";
 $username = "root";
 $password = "";
-$dbname = "project1";
+$dbname = "project2";
 
 $conn = new mysqli($severname, $username, $password, $dbname);
 //Kiểm tra kết nối
@@ -38,5 +38,5 @@ if (mysqli_num_rows($rs) == 0) {
     $_SESSION['auth']['customer']= $customer['name'];
     $_SESSION['auth']['email']= $customer['email'];
     //Về trang Home
-    header("Location: /project1/header.php");
+    header("Location: /project1/customer/home.php");
 }

@@ -6,255 +6,97 @@ if (!isset($_SESSION['auth']['admin'])) {
     header("Location: /project1/admin/auth/login.php");
     die();
 }
-//KẾt nối CSDL
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "project1";
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Kết nối thất bại " . $conn->connect_error);
-}
-if (isset($_GET['search'])) {
-    $search = $_GET['search'];
-    $sql = "SELECT id,name,image,buy_price FROM products WHERE name like '%$search%' OR buy_price like '%$search%' OR product_code like '%$search%' ";
-
-} else {
-    $sql = "SELECT id,name,image,buy_price FROM products";
-}
-$rs = mysqli_query($conn, $sql);
-
-
 
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang admin | HD store</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <style>
-        .sidebar {
-            height: 100vh;
-            background-color: #f8f9fa;
-            
-        }
-
-        .nav-link {
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            color: black;
-        }
-
-        .nav-link i {
-            margin-right: 10px;
-        }
-
-        .navbar {
-            box-shadow: 0 4px 2px -2px gray;
-        }
-
-        .card-title {
-            font-size: 1rem;
-        }
-
-        .sidebar-heading {
-            padding: 0.5rem 1.25rem;
-            font-size: 0.9rem;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .main-content {
-            margin-left: 250px;
-        }
-
-        .search-bar {
-            flex-grow: 1;
-        }
-
-        .dropdown-toggle::after {
-            margin-left: auto;
-        }
-
-        .collapse-inner {
-            padding-left: 1.25rem;
-        }
-
-        .collapse-inner a {
-            display: block;
-            padding: 0.25rem 0;
-        }
-
-        .rotate {
-            transition: transform 0.3s;
-        }
-
-        .rotate-90 {
-            transform: rotate(90deg);
-        }
-        * {
-            margin: 0;
-            padding: auto;
-        }
-        body {
-            background-color: rgb(236, 215, 215);
-            color: rgb(0, 0, 0);
-            font-family: Arial, sans-serif;
-        }
-        .left-column::-webkit-scrollbar {
-            width: 0; /* Ẩn thanh cuộn */
-        }
-        .D-container {
-            display: flex;
-            height: 100vh;
-        }
-        .left-column {
-            width: 17%;
-            height: 100vh;
-            overflow-y: auto;
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
-            padding: 20px;
-        }
-        .right-column {
-            width: 83%;
-            height: 100vh;
-            background-color: #ff0000;
-            position: relative;
-        }
-        .iframe-container {
-            width: 100%;
-            height: calc(100% ); /* Trừ đi phần header */
-            overflow: hidden;
-            position: absolute;
-             /* Bắt đầu từ vị trí của header */
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none; /* Loại bỏ khung viền của iframe */
-        }
-        .header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            background-color: #ffffff;
-            padding: 20px;
-            text-align: center;
-        }
-    </style>
+    <title>Trang admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
-<body class="bg-light">
-<div class="D-container">
-        <div class="left-column">
-        <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-white sidebar collapse">
-                <div class="d-flex align-items-center">
-                    <a href="/project1/admin/home.php" class="nav-link d-flex align-items-center">
-                        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-robot" viewBox="0 0 16 16">
-                            <path d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a25 25 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135"></path>
-                            <path d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5"></path>
-                        </svg> -->
-                        <img src="https://cdn.tuoitre.vn/zoom/700_700/tto/i/s626/2015/02/25/KvsVpgTE.jpg" width="70" height="70" alt="">
-                        <div class="ms-3">
-                            <div class="fs-6 fw-bold ">HD</div>
-                            <span class="fs-5 fw-bold">STORE</span>
-                        </div>
+<body>
+    <div class="d-flex ">
+        <!-- SIDEBAR START -->
+        
+        <div class="d-flex flex-column flex-shrink-0 p-3 bg-light vh-100" style="width: 280px;">
+            <!--LOGO START-->
+            <a href="/project1/admin/home.php"
+                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                    class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                    <path fill-rule="evenodd"
+                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                </svg>
+                <span class="fs-4 ms-2 float-start"><?php echo $_SESSION['auth']['admin'] ?>
+                    <div class="clearfix">
+                        <?php if ($_SESSION['auth']['admin'] == "MA VƯƠNG DUY"): ?>
+                            <span class="fs-6 float-start">Chức vụ: boss</span>
+                        <?php else: ?>
+                            <span class="fs-6 float-start">Chức vụ: không có</span>
+                        <?php endif; ?>
+                    </div>
+                </span>
+            </a>
+            <!--LOGO END-->
+            <hr>
+            <!-- MENU START -->
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a href="/project1/admin/home.php" class="nav-link active d-flex align-items-center"
+                        aria-current="page">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                            class="bi bi-house me-1 align-self-center " viewBox="0 0 16 16">
+                            <path
+                                d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
+                        </svg>
+                        Trang chủ
                     </a>
-                </div>
-                <hr>
-                <div class="position-sticky">
-                    <div class="sidebar-heading">MAIN HOME</div>
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">
-                                <i class="bi bi-house-door"></i> Home
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="sidebar-heading">ALL PAGE</div>
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="collapse" href="#ecommerceCollapse" role="button" aria-expanded="false" aria-controls="ecommerceCollapse">
-                                <i class="bi bi-cart"></i> Sản phẩm
-                                <i class="bi bi-chevron-right rotate ms-auto"></i>
-                            </a>
-                            <div class="collapse" id="ecommerceCollapse" data-bs-parent="#sidebarMenu">
-                                <div class="collapse-inner">
-                                    <a class="nav-link mx-3" href="/project1/admin/products/create.php">Thêm sản phẩm</a>
-                                    <a class="nav-link mx-3" href="/project1/admin/products/index.php">Danh sách sản phẩm</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="collapse" href="#categoryCollapse" role="button" aria-expanded="false" aria-controls="categoryCollapse">
-                                <i class="bi bi-card-list"></i> Thể loại
-                                <i class="bi bi-chevron-right rotate ms-auto"></i>
-                            </a>
-                            <div class="collapse" id="categoryCollapse" data-bs-parent="#sidebarMenu">
-                                <div class="collapse-inner">
-                                    <a class="nav-link" href="#">Danh sách sản phẩm</a>
-                                    <a class="nav-link" href="#">Add Category</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="collapse" href="#attributesCollapse" role="button" allapsria-expanded="false"  aria-controls="attributesCoe">
-                                <i class="bi bi-sliders"></i> Attributes
-                                <i class="bi bi-chevron-right rotate ms-auto"></i>
-                            </a>
-                            <div class="collapse" id="attributesCollapse" data-bs-parent="#sidebarMenu">
-                                <div class="collapse-inner">
-                                    <a class="nav-link" href="#" target="_blank"><i class="fa-brands fa-d-and-d"></i> Attributes List</a>
-                                    <a class="nav-link" href="#"><i class="fas fa-plus"></i> Add Attribute</a>
-                                </div>
-                            </div>
-                            
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-box-seam"></i> Order
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-person"></i> User
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-people"></i> Roles
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-images"></i> Gallery
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-graph-up"></i> Report
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="dropdown">
+                </li>
+                <li>
+                    <a href="/project1/admin/products/index.php" class="nav-link link-dark d-flex align-items-center"
+                        aria-current="page">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                            class="bi bi-house me-1 align-self-center " viewBox="0 0 16 16">
+                            <path
+                                d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
+                        </svg>
+                        Sản phẩm
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link link-dark d-flex align-items-center" aria-current="page">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                            class="bi bi-house me-1 align-self-center " viewBox="0 0 16 16">
+                            <path
+                                d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
+                        </svg>
+                        Đơn hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link link-dark d-flex align-items-center" aria-current="page">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                            class="bi bi-house me-1 align-self-center " viewBox="0 0 16 16">
+                            <path
+                                d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
+                        </svg>
+                        Thống kê doanh thu
+                    </a>
+                </li>
+                
+            </ul>
+            <!-- MENU END -->
+
+            <hr>
+            <!-- SETTINGS START -->
+            <div class="dropdown">
                 <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
                     id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
@@ -268,7 +110,7 @@ $rs = mysqli_query($conn, $sql);
                 </a>
                 <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2" style="">
                     <li><a class="dropdown-item" href="#">Thông tin tài khoản</a></li>
-                    
+                    <li><a class="dropdown-item" href="#">Email:<?php echo $_SESSION['auth']['email'] ?></a></li>
                     <li><a class="dropdown-item" href="#">Phone:<?php echo $_SESSION['auth']['phone'] ?></a></li>
                     <li>
                         <hr class="dropdown-divider">
@@ -280,50 +122,60 @@ $rs = mysqli_query($conn, $sql);
                     </li>
                 </ul>
             </div>
+            <!-- SETTINGS START -->
+        </div>
+        <!-- SIDEBAR END -->
+        <!-- CONTENT START -->
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary ">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Navbar</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Link</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    Dropdown
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                        <form class="d-flex" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
             </nav>
-
-            <!-- Main content -->
-            
-
         </div>
+        <!-- CONTENT END -->
     </div>
-        </div>
-        <div class="right-column">
-            <!-- Header for the right column -->
-             
-            <!-- Content for the right column -->
-            <div class="iframe-container">
-                <iframe src="http://localhost:8080/project1/header.php"></iframe>
-            </div>
-        </div>
-    </div>
-    
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var collapses = document.querySelectorAll('.collapse');
-            collapses.forEach(function (collapse) {
-                var toggleIcon = document.querySelector('[href="#' + collapse.id + '"] .rotate');
-
-                collapse.addEventListener('show.bs.collapse', function () {
-                    toggleIcon.classList.add('rotate-90');
-                    collapses.forEach(function (otherCollapse) {
-                        if (otherCollapse !== collapse) {
-                            var otherIcon = document.querySelector('[href="#' + otherCollapse.id + '"] .rotate');
-                            otherCollapse.classList.remove('show');
-                            otherIcon.classList.remove('rotate-90');
-                        }
-                    });
-                });
-
-                collapse.addEventListener('hide.bs.collapse', function () {
-                    toggleIcon.classList.remove('rotate-90');
-                });
-            });
-        });
-    </script>
+    <!-- Bảng mã JavaScript Bootstrap và jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -5,6 +5,6 @@ if(isset($_POST['submit'])){
     unset($_SESSION['auth']['email']);
 }
 
-header("Location: /project1/header.php");
+header("Location: /project1/customer/home.php");
 exit();
 ?>

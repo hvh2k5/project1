@@ -4,14 +4,12 @@ if (isset($_POST['submit'])) {
     $name = $_POST["cus_name"];
     $email = $_POST["cus_email"];
     $password = $_POST["cus_password"];
-    $phone =$_POST["cus_phone"];
-    $address=$_POST["cus_address"];
 
     // Kết nối đến CSDL
-    $servername = "localhost"; 
+    $servername = "localhost"; // Sửa lại tên biến đúng chính tả
     $db_username = "root";
     $db_password = "";
-    $dbname = "project1";
+    $dbname = "project2";
 
     $conn = new mysqli($servername, $db_username, $db_password, $dbname);
 
@@ -28,20 +26,17 @@ if (isset($_POST['submit'])) {
         echo "Tài khoản đã tồn tại!";
     } else {
         // Nếu tài khoản chưa tồn tại, chèn vào dữ liệu
-        $sql = "INSERT INTO customers (email, password, name,phone,address) VALUES ('$email', '$password', '$name','$phone','$address')";
+        $sql = "INSERT INTO customers (email, password, name) VALUES ('$email', '$password', '$name')";
 
         // Thực thi lệnh
         $rs = $conn->query($sql);
 
         if ($rs) {
-            header("Location: /project1/header.php");
+            header("Location: /project1/customer/home.php");
         } else {
-           echo "Đăng ký thất bại";
+            header("Location: /project1/customer/auth/signup.php");
         }
     }
-    
-   
-    
 
     // Đóng kết nối
     $conn->close();

@@ -3,182 +3,227 @@ session_start();
 //Nếu chưa đăng nhập sẽ sang trang logout
 
 /*if (!isset($_SESSION['auth']['email'])) {
-  header("Location:/project1/customer/home_logout.php");
+  header("Location:/project1/customer/auth/logout.php");
   die();
-}*/
+}
+*/
 ?>
 
 <?php
-//KẾt nối CSDL
+// Kết nối CSDL
 $servername = "localhost";
 $username = "root";
-$password = "";
-$dbname = "project1";
+$password = ""; // Ensure this is the correct password for your MySQL root user
+$dbname = "project2";
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
-  die("Kết nối thất bại " . $conn->connect_error);
+    die("Kết nối thất bại: " . $conn->connect_error);
 }
 if (isset($_GET['search'])) {
-  $search = $_GET['search'];
-  $sql = "SELECT id,name,image,buy_price FROM products WHERE name like '%$search%' OR buy_price like '%$search%' OR product_code like '%$search%' ";
-
+    $search = $_GET['search'];
+    $sql = "SELECT id, name, image, buy_price FROM products WHERE name LIKE '%$search%' OR buy_price LIKE '%$search%' OR product_code LIKE '%$search%' ";
 } else {
-  $sql = "SELECT id,name,image,buy_price FROM products";
+    $sql = "SELECT id, name, image, buy_price FROM products";
 }
 $rs = mysqli_query($conn, $sql);
-?>
 
+if (!$rs) {
+    die("Truy vấn thất bại: " . mysqli_error($conn));
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shop H&D</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="home.css">
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HD STORE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/project1/css/customer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <style>
+      body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: linear-gradient(to right, #fafafa, #2290c7);
+}
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-     
-            background: linear-gradient(to right, #fafafa, #2290c7);
-        
-    }
+main {
+    flex: 1;
+    display: flex;
+}
 
-    .product-card {
-      transition: transform 0.5s ease-in-out;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
+.sidebar {
+    width: 200px;
+    padding: 20px;
+    background-color: #0d6efd;
+ 
+}
 
-    .product-card:hover {
-      transform: scale(1.05);
-    }
+.content {
+    flex: 1;
+    padding: 20px;
+}
 
-    .card-body {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .image-container {
-      height: 150px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #f8f9fa;
-    }
-
-    .image-container img {
-      max-height: 100%;
-      max-width: 100%;
-    }
-
-    .row-cols-4 > .col {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .card {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-    }
-  </style>
+.image-container img {
+    width: auto;
+    height: auto;
+}
+   </style>
 </head>
 
 <body>
-  <header class="p-4 bg-primary text-white">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/project1/customer/home.php" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-          <img class="img-fluid rounded-circle" src="/project1/img/logo.png" alt="Example Image" width="150" class="me-2" />
-        </a>
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 text-white">Home</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Hot</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Danh mục</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Liên hệ</a></li>
-        </ul>
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-          <input name="search" type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
-        </form>
-        <div class="text-end d-flex">
-          <button type="button" class="btn btn-outline-light">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"></path>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"></path>
-            </svg>
-            <?php 
-              if(isset($_SESSION['auth']['email'])){
-                echo $_SESSION['auth']['email'];
-              } else {
-                echo 'Guest';
-              }
-            ?>
-          </button>
-          <div class="text-end d-flex align-items-center">
-            <button type="button" class="btn btn-outline-light">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"></path>
-              </svg>
-              Giỏ hàng
-            </button>
-            <?php 
-              if(!isset($_SESSION['auth']['email'])){
-                echo '<form method="POST" action="/project1/customer/auth/login.php">
-                        <button name="submit" class="btn btn-outline-light">Đăng Nhập</button>
-                      </form>';
-              } else {
-                echo '<form method="POST" action="/project1/customer/auth/logout.php">
-                        <button name="submit" class="btn btn-outline-light">Đăng Xuất</button>
-                      </form>';
-              }
-            ?>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-  <main class="container">
-    <h1 class="my-3 text-center">Nổi bật</h1>
-    <div class="container mt-4" id="laptop">
-      <div class="row my-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-        <?php while ($row = mysqli_fetch_assoc($rs)): ?>
-          <div class="col my-3 d-flex align-items-stretch">
-            <div class="card product-card">
-              <a href="/project1/customer/products/product_detail.php?id=<?php echo $row['id']; ?>">
-                <div class="image-container">
-                  <?php if ($row['image']): ?>
-                    <img src="<?php echo $row['image']; ?>" alt="Product Image">
-                  <?php else: ?>
-                    <img src="/path/to/placeholder.png" alt="No Image Available">
-                  <?php endif; ?>
-                </div>
-              </a>
-              <div class="card-body">
-                <h5 class="card-title"><?php echo $row['name']; ?></h5>
-                <p class="card-text" style="color: red;">Giá niêm yết: <?php echo number_format($row['buy_price'], 0, ',', '.'); ?> VND</p>
-
-                
-              </div>
+    <header class="d-flex justify-content-around">
+        <div class="navbar navbar-expand-lg navbar-dark">
+            <div>
+                <a class="navbar-brand" href="/project1/customer/home.php">HD STORE</a>
             </div>
-          </div>
-        <?php endwhile; ?>
-      </div>
+            <form class="d-flex search-bar ms-auto">
+                <input class="form-control" name="search" type="search" placeholder="Search" aria-label="Search">
+                <button class="" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                    </svg>
+                </button>
+            </form>
+            <!-- NÚT MENU KHI MÀN HÌNH THU NHỎ -->
+            <div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">How It Works</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Enterprise</a></li>
+                    
+                    <?php
+                    if (!isset($_SESSION['auth']['email'])) {
+                        echo '<li class="nav-item"><a class="nav-link btn btn-danger text-white ms-2" href="/project1/customer/auth/login_process.php" data-bs-toggle="modal" data-bs-target="#loginModal" name="submit">Login</a></li>';
+                    } else {
+                        
+                        echo '<li class="nav-item"><a class="nav-link btn btn-outline-light text-white ms-2" href="/project1/customer/profile.php"  name="submit">'.$_SESSION['auth']['email'] . '</a></li>';
+                    }
+                    ?>
+                    <?php
+                    if (isset($_SESSION['auth']['email'])) {
+                        echo '<form method="POST" action="/project1/customer/auth/logout.php">
+                        <button name="submit" class="btn btn-outline-light nav-link text-white">Đăng Xuất</button>
+                      </form>';
+                    } else {
+                        echo '<li class="nav-item"><a class="nav-link btn btn-danger text-white ms-2" href="/project1/customer/auth/signup_process.php" data-bs-toggle="modal" data-bs-target="#signupModal" name="submit">Signup</a></li>';
+                    }
+                    ?>
+                </ul>
+                <a href="/project1/customer/cart/cart.php"class=" btn btn-outline text-white ms-2 fa fa-shopping-cart"style="font-size:30px;"></a>
+            </div>
+        </div>
+    </header>
+    <main class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 sidebar">
+                
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9 content">
+               
+                <div class="container mt-4" id="laptop">
+                    <div class="row my-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+                        <?php while ($row = mysqli_fetch_assoc($rs)): ?>
+                            <div class="col my-3 d-flex align-items-stretch">
+                                <div class="card product-card">
+                                    <a href="/project1/customer/products/chitiet.php?id=<?php echo $row['id']; ?>">
+                                        <div class="image-container">
+                                            <?php if ($row['image']): ?>
+                                                <img src="<?php echo $row['image']; ?>" alt="Product Image">
+                                            <?php else: ?>
+                                                <img src="/path/to/placeholder.png" alt="No Image Available">
+                                            <?php endif; ?>
+                                        </div>
+                                    </a>
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?php echo $row['name']; ?></h5>
+                                        <p class="card-text" style="color: red;">Giá:
+                                            <?php echo number_format($row['buy_price'], 0, ',', '.'); ?> VND
+                                        </p>
+                                    <a href="/project1/customer/cart/cart.php" class="btn btn-primary">Add to cart</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endwhile; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Modal for Log In -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Đăng Nhập</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="/project1/customer/auth/login_process.php">
+                        <div class="mb-3">
+                            <input class="form-control" name="email" type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control" name="password" type="password" id="exampleInputPassword1" placeholder="Mật khẩu" required>
+                        </div>
+                        <button class="btn btn-primary" name="submit" type="submit">Đăng nhập</button>
+                        <div class="modal-footer">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal" data-bs-dismiss="modal">Tạo tài khoản nếu chưa có</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </main>
+    <!-- Modal for Sign Up -->
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signupModalLabel">Đăng Ký</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="/project1/customer/auth/signup_process.php">
+                        <div class="mb-3">
+                            <input class="form-control" name="cus_name" type="text" placeholder="Tên" required>
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control" name="cus_email" type="email" aria-describedby="emailHelp" placeholder="Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control" name="cus_password" type="password" placeholder="Mật khẩu" required>
+                        </div>
+                        <button class="btn btn-primary" name="submit" type="submit">Đăng ký</button>
+                        <div class="modal-footer">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Bạn đã có tài khoản?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

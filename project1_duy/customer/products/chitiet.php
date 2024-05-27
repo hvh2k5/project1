@@ -7,7 +7,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "project1";
+$dbname = "project2";
 
 // Tạo kết nối
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -69,7 +69,7 @@ $conn->close();
      
 
             <div>
-                <a class="navbar-brand" href="/project1/header.php">HD STORE</a>
+                <a class="navbar-brand" href="/project1/customer/home.php">HD STORE</a>
             </div>
             <form class="d-flex search-bar ms-auto">
                 <input class="form-control" name="search" type="search" placeholder="Search" aria-label="Search">
@@ -136,6 +136,7 @@ if (!isset($_SESSION['auth']['email'])) {
             <?php if ($row): ?>
                 <div class="col-md-4">
                     <img src="<?php echo $row['image']; ?>" alt="Product Image" class="product-img">
+                  <a href="/project1/customer/cart/cart_process.php"class="container btn btn-outline-dark">Thêm vào giỏ hàng</a>
                 </div>
                 <div class="col-md-8">
                     <h2><?php echo $row['name']; ?></h2>

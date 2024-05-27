@@ -7,7 +7,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "project1";
+$dbname = "project2";
 
 // Tạo kết nối
 $conn = new mysqli($servername, $username, $password, $dbname);
