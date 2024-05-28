@@ -25,9 +25,9 @@ if ($conn->connect_error) {
 }
 if (isset($_GET['search'])) {
     $search = $_GET['search'];
-    $sql = "SELECT id, name, image, buy_price FROM products WHERE name LIKE '%$search%' OR buy_price LIKE '%$search%' OR product_code LIKE '%$search%' ";
+    $sql = "SELECT id, name, image, buy_price, product_code FROM products WHERE name LIKE '%$search%' OR buy_price LIKE '%$search%' OR product_code LIKE '%$search%' ";
 } else {
-    $sql = "SELECT id, name, image, buy_price FROM products";
+    $sql = "SELECT id, name, image, buy_price, product_code FROM products";
 }
 $rs = mysqli_query($conn, $sql);
 
@@ -43,41 +43,37 @@ if (!$rs) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HD STORE</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/project1/css/customer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-   <style>
-      body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background: linear-gradient(to right, #fafafa, #2290c7);
-}
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: linear-gradient(to right, #fafafa, #2290c7);
+        }
 
-main {
-    flex: 1;
-    display: flex;
-}
+        
 
-.sidebar {
-    width: 200px;
-    padding: 20px;
-    background-color: #0d6efd;
- 
-}
 
-.content {
-    flex: 1;
-    padding: 20px;
-}
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
 
-.image-container img {
-    width: auto;
-    height: auto;
-}
-   </style>
+        .image-container img {
+            width: auto;
+            height: auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -89,14 +85,17 @@ main {
             <form class="d-flex search-bar ms-auto">
                 <input class="form-control" name="search" type="search" placeholder="Search" aria-label="Search">
                 <button class="" type="submit">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-search" viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                     </svg>
                 </button>
             </form>
             <!-- NÚT MENU KHI MÀN HÌNH THU NHỎ -->
             <div>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
@@ -106,13 +105,13 @@ main {
                     <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">How It Works</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Enterprise</a></li>
-                    
+
                     <?php
                     if (!isset($_SESSION['auth']['email'])) {
                         echo '<li class="nav-item"><a class="nav-link btn btn-danger text-white ms-2" href="/project1/customer/auth/login_process.php" data-bs-toggle="modal" data-bs-target="#loginModal" name="submit">Login</a></li>';
                     } else {
-                        
-                        echo '<li class="nav-item"><a class="nav-link btn btn-outline-light text-white ms-2" href="/project1/customer/profile.php"  name="submit">'.$_SESSION['auth']['email'] . '</a></li>';
+
+                        echo '<li class="nav-item"><a class="nav-link btn btn-outline-light text-white ms-2" href="/project1/customer/profile.php"  name="submit">' . $_SESSION['auth']['email'] . '</a></li>';
                     }
                     ?>
                     <?php
@@ -125,28 +124,22 @@ main {
                     }
                     ?>
                 </ul>
-                <a href="/project1/customer/cart/cart.php"class=" btn btn-outline text-white ms-2 fa fa-shopping-cart"style="font-size:30px;"></a>
+                <a href="/project1/customer/cart/cart.php" class=" btn btn-outline text-white ms-2 fa fa-shopping-cart"
+                    style="font: size 15px;px;">Giỏ hàng</a>
             </div>
         </div>
     </header>
     <main class="container-fluid">
         <div class="row">
-            <div class="col-md-3 sidebar">
-                
-                <ul class="nav flex-column">
-                    <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-                </ul>
-            </div>
+
             <div class="col-md-9 content">
-               
+
                 <div class="container mt-4" id="laptop">
                     <div class="row my-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
                         <?php while ($row = mysqli_fetch_assoc($rs)): ?>
                             <div class="col my-3 d-flex align-items-stretch">
                                 <div class="card product-card">
+                                    
                                     <a href="/project1/customer/products/chitiet.php?id=<?php echo $row['id']; ?>">
                                         <div class="image-container">
                                             <?php if ($row['image']): ?>
@@ -157,11 +150,15 @@ main {
                                         </div>
                                     </a>
                                     <div class="card-body">
+                                        <?php  $product_code = $row['product_code']; ?>
                                         <h5 class="card-title"><?php echo $row['name']; ?></h5>
                                         <p class="card-text" style="color: red;">Giá:
                                             <?php echo number_format($row['buy_price'], 0, ',', '.'); ?> VND
                                         </p>
-                                    <a href="/project1/customer/cart/cart.php" class="btn btn-primary">Add to cart</a>
+                                        <form method='POST' action='/project1/customer/cart/cart_process.php'>
+                                           <?php echo "<input name='product_code' value ='$product_code'  hidden readonly />" ?>
+                                            <button class="btn btn-primary">Add to cart</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -182,14 +179,17 @@ main {
                 <div class="modal-body">
                     <form method="POST" action="/project1/customer/auth/login_process.php">
                         <div class="mb-3">
-                            <input class="form-control" name="email" type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email" required>
+                            <input class="form-control" name="email" type="email" id="exampleInputEmail1"
+                                aria-describedby="emailHelp" placeholder="Email" required>
                         </div>
                         <div class="mb-3">
-                            <input class="form-control" name="password" type="password" id="exampleInputPassword1" placeholder="Mật khẩu" required>
+                            <input class="form-control" name="password" type="password" id="exampleInputPassword1"
+                                placeholder="Mật khẩu" required>
                         </div>
                         <button class="btn btn-primary" name="submit" type="submit">Đăng nhập</button>
                         <div class="modal-footer">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal" data-bs-dismiss="modal">Tạo tài khoản nếu chưa có</a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal" data-bs-dismiss="modal">Tạo
+                                tài khoản nếu chưa có</a>
                         </div>
                     </form>
                 </div>
@@ -210,14 +210,17 @@ main {
                             <input class="form-control" name="cus_name" type="text" placeholder="Tên" required>
                         </div>
                         <div class="mb-3">
-                            <input class="form-control" name="cus_email" type="email" aria-describedby="emailHelp" placeholder="Email" required>
+                            <input class="form-control" name="cus_email" type="email" aria-describedby="emailHelp"
+                                placeholder="Email" required>
                         </div>
                         <div class="mb-3">
-                            <input class="form-control" name="cus_password" type="password" placeholder="Mật khẩu" required>
+                            <input class="form-control" name="cus_password" type="password" placeholder="Mật khẩu"
+                                required>
                         </div>
                         <button class="btn btn-primary" name="submit" type="submit">Đăng ký</button>
                         <div class="modal-footer">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Bạn đã có tài khoản?</a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Bạn
+                                đã có tài khoản?</a>
                         </div>
                     </form>
                 </div>

@@ -136,7 +136,7 @@ if (!isset($_SESSION['auth']['email'])) {
             <?php if ($row): ?>
                 <div class="col-md-4">
                     <img src="<?php echo $row['image']; ?>" alt="Product Image" class="product-img">
-                  <a href="/project1/customer/cart/cart_process.php"class="container btn btn-outline-dark">Thêm vào giỏ hàng</a>
+           
                 </div>
                 <div class="col-md-8">
                     <h2><?php echo $row['name']; ?></h2>
