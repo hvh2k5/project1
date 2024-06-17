@@ -94,7 +94,7 @@ VALUES ('HP15SFQ5229TU', 'Laptop HP 15s fq5229TU i3 1215U/8GB/512GB/Win11', 1606
        ('HP15SFQ5229TQr','Lenovo LOQ Gaming 15IAX9 i5 12450HX (83GS000JVN)',3336515,null,null,'https://cdn.tgdd.vn/Products/Images/44/322072/lenovo-loq-gaming-15iax9-i5-83gs000jvn-thumb-new-600x600.jpg'),
        ('HP15SFQ5229TQt','MSI Gaming GF63 Thin 12UC i7 12650H (887VN)',6216515,null,null,'https://cdn.tgdd.vn/Products/Images/44/316941/msi-gaming-gf63-thin-12uc-i7-887vn-glr-thumb-600x600.jpg'),
        ('HP15SFQ5229TQy','Asus TUF Gaming F15 FX507ZC4 i5 12500H (HN229W)',3616515,null,null,'https://cdn.tgdd.vn/Products/Images/44/317709/asus-tuf-gaming-f15-fx507zc4-i5-hn229w-thumb-600x600.jpg'),
-       ('HP15SFQ5229TQu','HP Gaming VICTUS 15 fa1139TX i5 12450H (8Y6W3PA)',444515,null,null,'https://cdn.tgdd.vn/Products/Images/44/318163/hp-victus-15-fa1139tx-i5-8y6w3pa-thumb-600x600.jpg'),
+       ('HP15SFQ5229TQuu','HP Gaming VICTUS 15 fa1139TX i5 12450H (8Y6W3PA)',444515,null,null,'https://cdn.tgdd.vn/Products/Images/44/318163/hp-victus-15-fa1139tx-i5-8y6w3pa-thumb-600x600.jpg'),
        ('HP15SFQ5229TQi','Acer Gaming Aspire 7 A715 43G R8GA R5 5625U',3616515,null,null,'https://cdn.tgdd.vn/Products/Images/44/285961/acer-aspire-7-gaming-a715-43g-r8ga-r5-nhqhdsv002-thumb-600x600.jpg'),
        ('HP15SFQ5229TQo','Lenovo Ideapad Gaming 3 15ACH6 R5 5500H',23616515,null,null,'https://cdn.tgdd.vn/Products/Images/44/313667/lenovo-ideapad-gaming-3-15ach6-r5-82k2027pvn-600x600.png'),
        ('HP15SFQ5229TQp','MSI Gaming Bravo 15 B7ED R5 7535HS (010VN)',9916515,null,null,'https://cdn.tgdd.vn/Products/Images/44/314849/msi-bravo-15-b7ed-r5-010vn-thumb-2-600x600.png'),
