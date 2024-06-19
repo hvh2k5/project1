@@ -1,0 +1,261 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Đảm bảo padding và border không làm thay đổi kích thước của phần tử */
+}
+
+/* Thiết lập nền cho toàn bộ trang */
+body {
+    background-color: #d5f0f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* Cấu hình sidebar */
+.sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    /* Chiều cao 100% viewport height */
+    width: 19%;
+    /* Chiều rộng 19% viewport width */
+    background-color: #ffffff;
+    /* Màu nền trắng */
+    padding-top: 80px;
+    /* Khoảng cách từ trên xuống */
+    overflow-y: auto;
+    /* Hiển thị thanh cuộn khi nội dung quá dài */
+
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none;
+    /* Ẩn thanh cuộn trên Chrome/Safari */
+}
+
+/* Cấu hình các liên kết điều hướng */
+.nav-link {
+    font-size: 1rem;
+    /* Kích thước chữ */
+    display: flex;
+    /* Hiển thị dạng flexbox */
+    align-items: center;
+    /* Căn giữa theo trục dọc */
+    font-weight: 600;
+    /* Độ đậm chữ */
+    color: rgb(0, 0, 0);
+    /* Màu chữ đen */
+    padding-left: 2rem;
+    /* Khoảng cách bên trái */
+}
+
+/* Cấu hình biểu tượng trong liên kết điều hướng */
+.nav-link i {
+    margin-right: 10px;
+    /* Khoảng cách bên phải */
+}
+
+/* Thiết lập bóng cho navbar */
+.navbar {
+    box-shadow: 0 4px 2px -2px gray;
+    /* Bóng đổ dưới navbar */
+}
+
+/* Kích thước chữ tiêu đề card */
+.card-title {
+    font-size: 1rem;
+}
+
+/* Cấu hình tiêu đề sidebar */
+.sidebar-heading {
+    padding: 0.5rem 1.75rem;
+    /* Khoảng cách xung quanh */
+    font-size: 0.8rem;
+    /* Kích thước chữ */
+    font-weight: bold;
+    /* Độ đậm chữ */
+    color: #bbb;
+    /* Màu chữ */
+}
+
+/* Cấu hình phần nội dung chính */
+.main-content {
+    padding: 100px 30px;
+    /* Khoảng cách xung quanh */
+    overflow-y: auto;
+}
+
+/* Cấu hình thanh tìm kiếm */
+.search-bar {
+    flex-grow: 1;
+    /* Lớn lên theo không gian còn lại */
+}
+
+/* Cấu hình biểu tượng dropdown */
+.dropdown-toggle::after {
+    margin-left: auto;
+    /* Tự động căn phải */
+}
+
+/* Cấu hình nội dung trong collapse */
+.collapse-inner {
+    padding-left: 2.5rem;
+    /* Khoảng cách bên trái */
+}
+
+/* Cấu hình liên kết trong collapse */
+.collapse-inner a {
+    display: block;
+    /* Hiển thị dạng khối */
+    padding: 0.25rem 0;
+    /* Khoảng cách trên dưới */
+    font-size: 1rem;
+    /* Kích thước chữ */
+}
+
+/* Kích thước biểu tượng nhỏ */
+.smaller-icon {
+    font-size: 0.8em;
+}
+
+/* Cấu hình hiệu ứng xoay */
+.rotate {
+    transition: transform 0.3s;
+    /* Thời gian chuyển đổi */
+}
+
+/* Xoay 90 độ */
+.rotate-90 {
+    transform: rotate(90deg);
+    /* Xoay 90 độ */
+}
+
+/* Cấu hình header */
+header {
+    display: flex;
+    /* Hiển thị dạng flexbox */
+    align-items: center;
+    /* Căn giữa theo trục dọc */
+    justify-content: space-between;
+    /* Khoảng cách đều giữa các phần tử */
+    padding: 10px 20px;
+    /* Khoảng cách xung quanh */
+    background-color: #fff;
+    /* Màu nền trắng */
+    border-bottom: 1px solid #eaeaea;
+    /* Đường viền dưới */
+    position: fixed;
+    /* Định vị cố định */
+    top: 0;
+    /* Căn trên */
+    left: 0;
+    /* Căn trái */
+    right: 0;
+    /* Căn phải */
+    z-index: 1000;
+    /* Độ ưu tiên hiển thị */
+}
+
+/* Cấu hình phần logo */
+.logo {
+    display: flex;
+    /* Hiển thị dạng flexbox */
+    align-items: center;
+    /* Căn giữa theo trục dọc */
+    width: 18%;
+    /* Chiều rộng 100% */
+
+    border-right: 1px solid #eaeaea;
+    /* Đường viền phải */
+
+}
+
+/* Cấu hình hình ảnh logo */
+.logo img {
+    margin-right: 10px;
+    /* Khoảng cách bên phải */
+}
+
+/* Cấu hình thanh tìm kiếm */
+.search-bar {
+    flex-grow: 1;
+    /* Lớn lên theo không gian còn lại */
+    margin: 0 20px;
+    /* Khoảng cách xung quanh */
+    position: relative;
+    /* Định vị tương đối */
+}
+
+/* Cấu hình ô nhập liệu trong thanh tìm kiếm */
+.search-bar input {
+    width: 100%;
+    /* Chiều rộng 100% */
+    padding: 5px 10px;
+    /* Khoảng cách xung quanh */
+    border: 1px solid #eaeaea;
+    /* Đường viền */
+    border-radius: 5px;
+    /* Bo góc */
+    padding-right: 30px;
+    /* Khoảng cách bên phải */
+}
+
+/* Cấu hình biểu tượng trong thanh tìm kiếm */
+.search-bar i {
+    position: absolute;
+    /* Định vị tuyệt đối */
+    top: 50%;
+    /* Căn giữa theo trục dọc */
+    right: 10px;
+    /* Căn phải */
+    transform: translateY(-50%);
+    /* Dịch chuyển lên 50% */
+    color: #6c757d;
+    /* Màu biểu tượng */
+}
+
+/* Cấu hình các biểu tượng trong header */
+.header-icons {
+    display: flex;
+    /* Hiển thị dạng flexbox */
+    align-items: center;
+    /* Căn giữa theo trục dọc */
+}
+
+/* Cấu hình kích thước và khoảng cách các biểu tượng */
+.header-icons i,
+.header-icons img {
+    margin: 0 10px;
+    /* Khoảng cách xung quanh */
+    font-size: 1.2rem;
+    /* Kích thước chữ */
+}
+
+/* Cấu hình huy hiệu */
+.header-icons .badge {
+    font-size: 0.75rem;
+    /* Kích thước chữ */
+    position: relative;
+    /* Định vị tương đối */
+    top: -10px;
+    /* Dịch chuyển lên trên */
+    right: 10px;
+    /* Dịch chuyển sang phải */
+}
+
+/* Cấu hình phần hồ sơ */
+.profile {
+    display: flex;
+    /* Hiển thị dạng flexbox */
+    align-items: center;
+    /* Căn giữa theo trục dọc */
+}
+
+/* Cấu hình hình ảnh trong hồ sơ */
+.profile img {
+    border-radius: 100%;
+    /* Bo tròn */
+    margin-right: 10px;
+    /* Khoảng cách bên phải */
+}

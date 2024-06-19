@@ -3,7 +3,7 @@
 
 session_start();
 if (isset($_SESSION['auth']['admin'])) {
-    header("Location: /project1/admin/home.php");
+    header("Location: /project1/admin/home.html");
     die();
 }
 ?>
@@ -60,7 +60,7 @@ if (isset($_SESSION['auth']['admin'])) {
 <body class="bg-white">
     <!-- Image and name container. Change to your picture here. -->
     <div class="image-container">
-        <img src="/project1/img/link.png" class="my-3" alt="Person" style="max-width: 100%; height: 150px; border-radius: 50%;">
+        <img src="/project1/public/img/link.png" class="my-3" alt="Person" style="max-width: 100%; height: 150px; border-radius: 50%;">
 
         <!-- Content. Add your bio here. -->
         <div class="my-3">
@@ -95,8 +95,8 @@ if (isset($_SESSION['auth']['admin'])) {
         </div>
         <!-- Footer. This section contains an ad for W3Schools Spaces. You can leave it to support us. -->
         <footer class="text-center py-4">
-            <a href="https://www.w3schools.com/spaces" title="This website was made with W3schools Spaces. Make your own free website today!" target="_blank">
-                <img src="/project1/img/link.png" alt="This website was made with W3schools Spaces. Make your own free website today!" width="50" height="50">
+            <a href=""  target="_blank">
+                <img src="/project1/public/img/link.png"  width="50" height="50">
             </a>
         </footer>
     </div>
@@ -110,7 +110,7 @@ if (isset($_SESSION['auth']['admin'])) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="/project1/admin/auth/login_process.php">
+                    <form method="POST" action="/project1/admin/process/login_process.php">
                         <div class="mb-3">
                             <input class="form-control" name="email" type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email /Số điện thoại" required>
                         </div>

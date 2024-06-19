@@ -1,0 +1,26 @@
+.wrapper {
+    display: flex;
+    height: 100vh;
+    /* Chiều cao tổng thể của khu vực cuộn */
+    border: 1px solid #ccc;
+    /* Để dễ nhận biết phần tử */
+}
+
+.scrollable {
+    overflow-y: auto;
+    /* Bật tính năng cuộn */
+    height: 100%;
+    /* Chiều cao của phần tử cuộn */
+}
+
+.right {
+    flex-grow: 1;
+    /* Phần cuộn bên trái sẽ mở rộng để chiếm hết không gian còn trống */
+}
+
+.left {
+    flex-shrink: 0;
+    /* Phần cuộn bên phải sẽ không bị co lại khi không đủ không gian */
+    width: 100px;
+    /* Chiều rộng của phần cuộn bên phải */
+}
