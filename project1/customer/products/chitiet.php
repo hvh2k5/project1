@@ -1,8 +1,7 @@
 <?php
 session_start();
-//Nếu chưa đăng nhập sẽ sang trang logout
 
-//Kết nối CSDL
+// Kết nối CSDL
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -22,9 +21,9 @@ if (isset($_GET['id'])) {
 
     // Truy vấn dữ liệu từ cả hai bảng products và laptop_product_detail và kết hợp chúng
     $sql = "SELECT p.id, p.name, p.image, p.buy_price, p.product_code, l.cpu, l.ram, l.hard_drive, l.screen, l.graphics_card, l.ports, l.operating_system, l.design, l.dimensions, l.launch_date 
-    FROM products p 
-    LEFT JOIN laptop_product_detail l ON p.product_code = l.product_code 
-    WHERE p.id = $id";
+            FROM products p 
+            LEFT JOIN laptop_product_detail l ON p.product_code = l.product_code 
+            WHERE p.id = $id";
     $result = $conn->query($sql);
 
     // Kiểm tra nếu có kết quả trả về
@@ -32,25 +31,33 @@ if (isset($_GET['id'])) {
         // Lấy dữ liệu của sản phẩm
         $row = $result->fetch_assoc();
         $product_code = $row['product_code']; // Lấy mã sản phẩm
+        
+        // Truy vấn các sản phẩm tương tự
+        $similar_sql = "SELECT id, name, image, buy_price FROM products 
+                        WHERE product_code != '$product_code' 
+                        ORDER BY RAND() LIMIT 6"; 
+        $similar_result = $conn->query($similar_sql);
     } else {
         // Xử lý khi không tìm thấy sản phẩm
         $row = null;
+        $similar_result = null;
     }
 } else {
     // Xử lý khi không có id được truyền qua URL
     $row = null;
+    $similar_result = null;
 }
 
 // Đóng kết nối
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Chi tiết sản phẩm</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -62,13 +69,64 @@ $conn->close();
 
     <link rel="stylesheet" href="/project1/css/customer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+       .product-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.product-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+.product-card h5 {
+    font-size: 18px;
+    margin-top: 10px;
+}
+.product-card .price {
+    font-size: 16px;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.mess-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    z-index: 1000;
+}
+
+.mess-icon img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.mess-icon img:hover {
+    transform: scale(1.1);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: linear-gradient(to right, #fafafa, #2290c7);
+}
+
+    </style>
 </head>
 
 <body>
+    
     <header class="d-flex justify-content-around">
-        <div class="navbar navbar-expand-lg navbar-dark ">
-     
-
+        <div class="navbar navbar-expand-lg navbar-dark">
             <div>
                 <a class="navbar-brand" href="/project1/customer/home.php">HD STORE</a>
             </div>
@@ -83,7 +141,6 @@ $conn->close();
                 </button>
             </form>
             <!-- NÚT MENU KHI MÀN HÌNH THU NHỎ -->
-
             <div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,9 +148,9 @@ $conn->close();
                 </button>
             </div>
 
-             <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="/project1/customer/home.php">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/project1/customer/home.php">Trang chủ</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Sản phẩm</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Liên hệ</a></li>
 
@@ -101,8 +158,7 @@ $conn->close();
                     if (!isset($_SESSION['auth']['email'])) {
                         echo '<li class="nav-item"><a class="nav-link btn btn-danger text-white ms-2" href="/project1/customer/auth/login_process.php" data-bs-toggle="modal" data-bs-target="#loginModal" name="submit">Login</a></li>';
                     } else {
-
-                        echo '<li class="nav-item"><a class="nav-link btn btn-outline-light text-white ms-2" href="/project1/customer/profile.php"  name="submit">' . $_SESSION['auth']['email'] . '</a></li>';
+                        echo '<li class="nav-item"><a class="nav-link btn btn-outline-light text-white ms-2" href="#"  name="submit">' . $_SESSION['auth']['email'] . '</a></li>';
                     }
                     ?>
                     <?php
@@ -116,27 +172,26 @@ $conn->close();
                     ?>
                 </ul>
                 <a href="/project1/customer/cart/cart.php" class=" btn btn-outline text-white ms-2 fa fa-shopping-cart"
-                    style="font: size 15px;px;">Giỏ hàng</a>
+                    style="font-size: 15px;">Giỏ hàng</a>
             </div>
         </div>
     </header>
 
-    
     <main class="container my-5">
         <div class="row">
             <?php if ($row): ?>
                 <div class="col-md-4">
                     <img src="<?php echo $row['image']; ?>" alt="Product Image" class="product-img">
                     <form method='POST' action='/project1/customer/cart/cart_process.php'>
-                                           <?php echo "<input name='product_code' value ='$product_code'  hidden readonly />" ?>
-                                            <button class="w-100 btn btn-primary">Mua Ngay</button>
-                                        </form>
-                    
-           
+                        <?php echo "<input name='product_code' value ='$product_code' hidden readonly />" ?>
+                        <button class="w-100 btn btn-primary">Mua Ngay</button>
+                    </form>
                 </div>
                 <div class="col-md-8">
                     <h3><?php echo $row['name']; ?></h3>
-                    <h4 class="card-text" style="color: red;"> <?php echo number_format($row['buy_price'], 0, ',', '.'); ?> VND</h4>
+                    <h4 class="card-text" style="color: red;">
+                        <?php echo number_format($row['buy_price'], 0, ',', '.'); ?> VND
+                    </h4>
 
                     <?php if (!is_null($row['cpu'])): ?>
                         <h3>Thông tin sản phẩm</h3>
@@ -158,7 +213,7 @@ $conn->close();
                                 <td><?php echo $row['screen']; ?></td>
                             </tr>
                             <tr>
-                                <th>Card màn hình</th>
+                                <th>Card đồ họa</th>
                                 <td><?php echo $row['graphics_card']; ?></td>
                             </tr>
                             <tr>
@@ -181,76 +236,50 @@ $conn->close();
                                 <th>Ngày ra mắt</th>
                                 <td><?php echo $row['launch_date']; ?></td>
                             </tr>
-
                         </table>
-                        <?php else: ?>
-                        <p>Thông tin chi tiết sản phẩm đang cập nhật....</p>
                     <?php endif; ?>
                 </div>
             <?php else: ?>
                 <div class="col-12">
-                    <p>Không tìm thấy sản phẩm.</p>
+                    <p>Sản phẩm không tồn tại.</p>
                 </div>
             <?php endif; ?>
-      
-    </main>
-  <!-- Modal for Log In -->
-  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Đăng Nhập</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="POST" action="/project1/customer/auth/login_process.php">
-                        <div class="mb-3">
-                            <input class="form-control" name="email" type="email" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" placeholder="Email" required>
-                        </div>
-                        <div class="mb-3">
-                            <input class="form-control" name="password" type="password" id="exampleInputPassword1"
-                                placeholder="Mật khẩu" required>
-                        </div>
-                        <button class="btn btn-primary" name="submit" type="submit">Đăng nhập</button>
-                        <div class="modal-footer">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal" data-bs-dismiss="modal">Tạo
-                                tài khoản nếu chưa có</a>
-                        </div>
-                    </form>
+        </div>
+        
+
+        <!-- Phần sản phẩm tương tự -->
+        <div class="row mt-5">
+    <h3>Sản phẩm tương tự</h3>
+    <?php if ($similar_result && $similar_result->num_rows > 0): ?>
+        <?php while ($similar_row = $similar_result->fetch_assoc()): ?>
+            <div class="col-md-2  mb-4">
+                <div class="card product-card">
+                    <!-- Bao quanh thẻ <img> bằng thẻ <a> để chuyển sang trang chi tiết khi nhấp vào ảnh -->
+                    <a href="chitiet.php?id=<?php echo $similar_row['id']; ?>">
+                        <img src="<?php echo $similar_row['image']; ?>" class="img-fluid" alt="<?php echo $similar_row['name']; ?>">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $similar_row['name']; ?></h5>
+                        <p class="price"><?php echo number_format($similar_row['buy_price'], 0, ',', '.'); ?> VND</p>
+                        <!-- <a href="chitiet.php?id=<?php echo $similar_row['id']; ?>" class="btn btn-buy">Xem chi tiết</a> -->
+                    </div>
                 </div>
             </div>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <div class="col-12">
+            <p>Không có sản phẩm tương tự.</p>
         </div>
-    </div>
-    <!-- Modal for Sign Up -->
-    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="signupModalLabel">Đăng Ký</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                <form method="POST" action="/project1/customer/auth/signup_process.php">
-    <div class="mb-3">
-        <input class="form-control" name="cus_name" type="text" placeholder="Tên" required>
-    </div>
-    <div class="mb-3">
-        <input class="form-control" name="cus_email" type="email" aria-describedby="emailHelp" placeholder="Email" required>
-    </div>
-    <div class="mb-3">
-        <input class="form-control" name="cus_password" type="password" placeholder="Mật khẩu" required>
-    </div>
-    <div class="mb-3">
-        <input class="form-control" name="cus_phone" type="text" placeholder="Số điện thoại" required>
-    </div>
-    <div class="mb-3">
-        <input class="form-control" name="cus_address" type="text" placeholder="Địa chỉ" required>
-    </div>
-    <button class="btn btn-primary" name="submit" type="submit">Đăng ký</button>
-    <div class="modal-footer">
-        <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Đăng nhập nếu đã có tài khoản</a>
-    </div>
-</body>
+    <?php endif; ?>
+</div>
 
+    </main>
+    <!-- Icon mess -->
+    <div class="mess-icon">
+        <a href="https://www.facebook.com/aitiniubi" target="_blank">
+            <img src="/project1/public/img/logo_mess.png" alt="Messenger">
+        </a>
+    </div>
+
+</body>
 </html>

@@ -7,17 +7,38 @@ if (!isset($_SESSION['auth']['admin_email'])) {
 }
 
 ?>
+<?php
+
+// Phần 1.Kết nối CSDL: 
+$_servername = "localhost";
+$_username = "root";
+$password = "";
+$dbname = "project1";
+$conn = new mysqli($_servername, $_username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Kết nối thất bại: " . $conn->connect_error);
+}
+// Phần 2.Câu lệnh:
+// Lấy sản phẩm laptop:
+
+$sql = "SELECT * FROM products";
+
+// Bước 3.Thực thi và xem kết quả:
+$result = mysqli_query($conn, $sql);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <link rel="icon" href="/project1/public/img/link.png" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chính thức</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
         rel="stylesheet">
+        
+    <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.0.7/datatables.min.js"></script>
     <link rel="stylesheet" href="/project1/css/admin.css">
 </head>
 
@@ -136,70 +157,56 @@ if (!isset($_SESSION['auth']['admin_email'])) {
                 </div>
             </nav>
             <main class="main-content col">
-                <div class="row row-cols-1 row-cols-md-2 g-4">
-                    <!-- Danh sách sản phẩm -->
-                    <div class="col">
-                        <div class="card h-100 shadow-lg">
-                            <div class="card-body d-flex align-items-center">
-                                <i class="bi bi-inboxes fs-3 text-primary me-3"></i>
-                                <div>
-                                    <h5 class="card-title">Danh sách sản phẩm</h5>
-                                    <p class="card-text">Xem danh sách các sản phẩm hiện có trong cửa hàng.</p>
-                                    <a href="/project1/admin/products/product_list.php" class="btn btn-primary">Xem
-                                        chi tiết</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="container scrollable right">
+                    <table class="table table-bordered" id="product_table">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã sản phẩm</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Hình ảnh</th>
+                                <th>Gía bán</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $count = 0; ?>
+                            <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                <?php $count++; ?>
+                                <tr>
+                                    <td><?php echo $count; ?></td>
+                                    <td><?php echo $row['id']; ?></td>
+                                    <td><?php echo $row['name']; ?></td>
+                                    <td>
+                                        <img style="width: 200px;" class="img-fluid" src="<?php echo $row['image']; ?>"
+                                            alt="">
+                                    </td>
+                                    <td>
+                                        <?php echo $row['buy_price']; ?>₫
+                                    </td>
+                                    <td>
+                                        <?php $product_id = $row['id']; ?>
+                                        <a href="/project1/admin/products/edit.php?id=<?php echo $product_id; ?>">
+                                            <button class="btn btn-info mx-2 my-2">Sửa</button>
+                                        </a>
+                                        <form onsubmit="return confirm('Xác nhận xóa')" method='POST' action="delete_process.php">
 
-                    <!-- Thêm sản phẩm -->
-                    <div class="col">
-                        <div class="card h-100 shadow-lg">
-                            <div class="card-body d-flex align-items-center">
-                                <i class="bi bi-plus-circle fs-3 text-success me-3"></i>
-                                <div>
-                                    <h5 class="card-title">Thêm sản phẩm</h5>
-                                    <p class="card-text">Thêm sản phẩm mới vào cửa hàng.</p>
-                                    <a href="/project1/admin/products/create.php" class="btn btn-success">Thêm sản
-                                        phẩm</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                            <input name="product_id" value="<?php echo $product_id; ?>" hidden />
+                                            <button type="submit" class="btn btn-danger mx-2">Xóa</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
 
-                    <!-- Duyệt hóa đơn -->
-                    <div class="col">
-                        <div class="card h-100 shadow-lg">
-                            <div class="card-body d-flex align-items-center">
-                                <i class="bi bi-box-seam fs-3 text-warning me-3"></i>
-                                <div>
-                                    <h5 class="card-title">Duyệt hóa đơn</h5>
-                                    <p class="card-text">Duyệt và xử lý các hóa đơn mới từ khách hàng.</p>
-                                    <a href="/project1/admin/order/index.php" class="btn btn-warning">Duyệt hóa
-                                        đơn</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Thêm chi tiết sản phẩm -->
-                    <div class="col">
-                        <div class="card h-100 shadow-lg">
-                            <div class="card-body d-flex align-items-center">
-                                <i class="bi bi-file-earmark-plus fs-3 text-info me-3"></i>
-                                <div>
-                                    <h5 class="card-title">Thêm chi tiết sản phẩm</h5>
-                                    <p class="card-text">Thêm thông tin chi tiết cho sản phẩm.</p>
-                                    <a href="#" class="btn btn-info">Thêm chi tiết</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        </tbody>
+                    </table>
+                    <script>
+                        let table = new DataTable('#product_table')
+                    </script>
                 </div>
             </main>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="/project1/js/admin.js"></script>

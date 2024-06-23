@@ -8,7 +8,6 @@ else{
     header("Location: /project1/admin/auth/login.php");
     die();
 }
-
 if (isset($_POST['password'])) {
     $user_password = $_POST['password'];
 }
@@ -42,9 +41,9 @@ if(mysqli_num_rows($rs) ==0){
 else{
     $user = mysqli_fetch_assoc($rs);
     // Đăng nhập thành công
-    $_SESSION['auth']['admin'] = $user['name'];
-    $_SESSION['auth']['email'] = $user['email'];
-    $_SESSION['auth']['phone'] = $user['phone'];
+    $_SESSION['auth']['admin_name'] = $user['name'];
+    $_SESSION['auth']['admin_email'] = $user['email'];
+    $_SESSION['auth']['admin_phone'] = $user['phone'];
     
     //chuyen huong:
     header("Location: /project1/admin/home.php");

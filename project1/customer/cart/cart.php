@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && isset($_P
                     if (!isset($_SESSION['auth']['email'])) {
                         echo '<li class="nav-item"><a class="nav-link btn btn-danger text-white ms-2" href="/project1/customer/auth/login_process.php" data-bs-toggle="modal" data-bs-target="#loginModal" name="submit">Login</a></li>';
                     } else {
-                        echo '<li class="nav-item"><a class="nav-link btn btn-outline-light text-white ms-2" href="/project1/customer/profile.php"  name="submit">' . $_SESSION['auth']['email'] . '</a></li>';
+                        echo '<li class="nav-item"><a class="nav-link btn btn-outline-light text-white ms-2" href="#"  name="submit">' . $_SESSION['auth']['email'] . '</a></li>';
                     }
                     ?>
                     <?php
@@ -116,8 +116,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && isset($_P
         
     </header>
     <main class="container">
-    <a href="/project1/customer/order/index.php"
-                    style="font: size 15px;px;">Lịch sử đơn hàng</a>
+        <?php
+
+if (isset($_SESSION['auth']['email'])) {
+ echo'<a href="/project1/customer/order/index.php"
+ style="font: size 15px;px;">Lịch sử đơn hàng</a>';
+}
+
+
+        ?>
+   
         <!--Hiển thị giỏ hàng-->
         <?php if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])): ?>
             <p class='text-center my-3 text-danger'>Chưa có sản phẩm</p>

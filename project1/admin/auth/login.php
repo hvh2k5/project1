@@ -2,8 +2,8 @@
 # tất cả các trang admin yêu cầu đăng nhập thì mới xem đc
 
 session_start();
-if (isset($_SESSION['auth']['admin'])) {
-    header("Location: /project1/admin/home.html");
+if (isset($_SESSION['auth']['admin_email'])) {
+    header("Location: /project1/admin/home.php");
     die();
 }
 ?>
@@ -11,7 +11,7 @@ if (isset($_SESSION['auth']['admin'])) {
 <html lang="en">
 
 <head>
-    <link rel="icon" href="/project1/img/link.png" type="image/x-icon">
+    <link rel="icon" href="/project1/public/img/link.png" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng nhập |HD Computer</title>
@@ -58,32 +58,24 @@ if (isset($_SESSION['auth']['admin'])) {
 </head>
 
 <body class="bg-white">
-    <!-- Image and name container. Change to your picture here. -->
     <div class="image-container">
         <img src="/project1/public/img/link.png" class="my-3" alt="Person" style="max-width: 100%; height: 150px; border-radius: 50%;">
 
-        <!-- Content. Add your bio here. -->
         <div class="my-3">
-            <h2 class="text-primary"><strong>HD Computer</strong></h2>
+            <h2 class="text-primary"><strong>HD STORE</strong></h2>
             <p>Xin chào</p>
         </div>
-
-        <!-- Links section 1. Replace the # inside of the "" with your links. -->
         <div class="links-container">
-            <a href="/project1/customer/home/index.php" class="btn btn-primary btn-lg" style="width: 350px;">Đến cửa hàng</a>
+            <a href="/project1/customer/home.php" class="btn btn-primary btn-lg" style="width: 350px;" target="_blank">Đến cửa hàng</a>
             <button onclick="openLoginModal()" class="btn btn-primary btn-lg" style="width: 350px;">Đăng nhập</button>
-            <a href="/project1/customer/home/auth/signup.php" class="btn btn-primary btn-lg" style="width: 350px;">Đăng ký</a>
+            <a href="/project1/customer/auth/signup.php" class="btn btn-primary btn-lg" style="width: 350px;">Đăng ký</a>
         </div>
-
-        <!-- Add links to your social networks here. -->
         <div class="container text-center my-4">
             <i class="fa fa-facebook-official fa-2x mx-2"></i>
             <i class="fa fa-instagram fa-2x mx-2"></i>
             <i class="fa fa-linkedin fa-2x mx-2"></i>
         </div>
     </div>
-
-    <!-- The Contact Section -->
     <div class="container my-5" style="max-width: 390px;">
         <h5 class="text-center">Get in touch.</h5>
         <div class="row py-4">
@@ -93,7 +85,6 @@ if (isset($_SESSION['auth']['admin'])) {
                 <i class="fa fa-envelope" style="width: 30px;"></i> Email: mavuongduy@mail.com<br>
             </div>
         </div>
-        <!-- Footer. This section contains an ad for W3Schools Spaces. You can leave it to support us. -->
         <footer class="text-center py-4">
             <a href=""  target="_blank">
                 <img src="/project1/public/img/link.png"  width="50" height="50">
@@ -101,7 +92,7 @@ if (isset($_SESSION['auth']['admin'])) {
         </footer>
     </div>
 
-    <!-- The Modal -->
+
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -110,7 +101,7 @@ if (isset($_SESSION['auth']['admin'])) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="/project1/admin/process/login_process.php">
+                    <form method="POST" action="/project1/admin/auth/login_process.php">
                         <div class="mb-3">
                             <input class="form-control" name="email" type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email /Số điện thoại" required>
                         </div>
@@ -121,7 +112,7 @@ if (isset($_SESSION['auth']['admin'])) {
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <p>Bạn chưa có tài khoản? <a href="/project1/customer/home/auth/signup.php">Đăng ký ngay</a></p>
+                    <p>Bạn chưa có tài khoản? <a href="/project1/customer/auth/signup.php">Đăng ký ngay</a></p>
                 </div>
             </div>
         </div>

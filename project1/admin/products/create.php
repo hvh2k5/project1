@@ -1,142 +1,248 @@
 <?php
-# tất cả các trang admin yêu cầu đăng nhập thì mới xem đc
-
+# Tat ca cac trang admin deu yeu cau dang nhap thi moi xem dc
 session_start();
-if (!isset($_SESSION['auth']['admin'])) {
-    header("Location: /project1/admin/auth/login.php");
+if (!isset($_SESSION['auth']['admin_email'])) {
+    header("Location:/lego/admin/auth/login.php");
     die();
 }
-
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <link rel="icon" href="/project1/public/img/link.png" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Chính thức</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+        rel="stylesheet">
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+    <link rel="stylesheet" href="/project1/css/admin.css">
 </head>
 
 <body>
-    <div class="d-flex">
-        <!-- SIDEBAR START -->
-
-        <div class="d-flex flex-column flex-shrink-0 p-3 bg-light vh-100" style="width: 280px;">
-            <!--LOGO START-->
-            <a href="/project1/admin/home.php"
-                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                    class="bi bi-person-circle" viewBox="0 0 16 16">
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                    <path fill-rule="evenodd"
-                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-                </svg>
-                <span class="fs-4 ms-2 float-start">MA VƯƠNG DUY
-                    <div class="clearfix">
-                        <span class="fs-6 float-start">Chức vụ: Boss</span>
-                    </div>
-                </span>
+    <header>
+        <div class="logo">
+            <a href="/project1/admin/home.php" class="nav-link">
+                <img src="/project1/public/img/logo.png" alt="Logo" class="rounded" width="50px">
+                <div class="ms-1 text-center">
+                    <div class="fs-5 fw-bold">HD STORE</div>
+                </div>
             </a>
-            <!--LOGO END-->
-            <hr>
-            <!-- MENU START -->
-            <ul class="nav nav-pills flex-column mb-auto">
-                <li class="nav-item">
-                    <a href="/project1/admin/home.php" class="nav-link link-dark d-flex align-items-center" aria-current="page">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
-                            class="bi bi-house me-1 align-self-center " viewBox="0 0 16 16">
-                            <path
-                                d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
-                        </svg>
-                        Trang chủ
-                    </a>
-                </li>
-                <li>
-                    <a href="/project1/admin/products/index.php" class="nav-link active  d-flex align-items-center" aria-current="page">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
-                            class="bi bi-house me-1 align-self-center " viewBox="0 0 16 16">
-                            <path
-                                d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
-                        </svg>
-                        Sản phẩm 
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link link-dark d-flex align-items-center" aria-current="page">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
-                            class="bi bi-house me-1 align-self-center " viewBox="0 0 16 16">
-                            <path
-                                d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
-                        </svg>
-                        Đơn hàng
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link link-dark d-flex align-items-center" aria-current="page">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
-                            class="bi bi-house me-1 align-self-center " viewBox="0 0 16 16">
-                            <path
-                                d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
-                        </svg>
-                        Thống kê doanh thu
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link link-dark d-flex align-items-center" aria-current="page">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
-                            class="bi bi-house me-1 align-self-center " viewBox="0 0 16 16">
-                            <path
-                                d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
-                        </svg>
-                        Trang chủ
-                    </a>
-                </li>
-            </ul>
-            <!-- MENU END -->
-            <hr>
-            <div class="dropdown">
-                <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
-                    id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                    <strong>mdo</strong>
-                </a>
-                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2" style="">
-                    <li><a class="dropdown-item" href="#">New project...</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Sign out</a></li>
-                </ul>
+        </div>
+
+        <div class="header-icons">
+            <div class="profile">
+                <img class="img-thumbnail" src="https://art.pixilart.com/6a445ffefff19bc.png" alt="Profile"
+                    width="50px">
+                <div>
+                    <div><?php echo $_SESSION['auth']['admin_name'] ?></div>
+                    <div class="text-muted">Admin</div>
+                </div>
             </div>
+
         </div>
-        <!-- SIDEBAR END -->
-        <!-- CONTENT START -->
-        <div class="container">
-            <h1>Thêm sản phẩm</h1>
-            <form method='POST' action="create_process.php" enctype="multipart/form-data">
-                <input class="form-control mt-2" name='product_code' placeholder="Nhập mã sản phẩm" required />
-                <input class="form-control mt-2" name='name' placeholder="Nhập tên" required />
-                <input type="number" step="1" min="0" class="form-control mt-2" name='price' placeholder="Nhập giá" required />
-                <input type="file" class="form-control mt-2" name='image_file'/>
-                <input class="form-control mt-2" name='image' placeholder="Nhập link ảnh" required />
-                <textarea row="5" class="form-control mt-2" name="description"></textarea>
-                <button type="submit" class="btn btn-primary mt-2">Tạo</button>
-            </form>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-white sidebar collapse">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <div class="sidebar-heading">TRANG CHỦ</div>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/project1/admin/home.php">
+                                <i class="bi bi-house-door"></i> Trang chủ
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="sidebar-heading">QUẢN LÝ SẢN PHẨM</div>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#ecommerceCollapse" role="button"
+                                aria-expanded="false" aria-controls="ecommerceCollapse">
+                                <i class="bi bi-inboxes"></i> Sản phẩm
+                                <i class="bi bi-chevron-right rotate ms-auto smaller-icon"></i>
+                            </a>
+                            <div class="collapse" id="ecommerceCollapse" data-bs-parent="#sidebarMenu">
+                                <div class="collapse-inner">
+                                    <a class="nav-link" href="/project1/admin/products/product_list.php"><i
+                                            class="bi bi-caret-right"></i>
+                                        Danh sách sản phẩm
+                                    </a>
+                                    <a class="nav-link" href="/project1/admin/products/create.php"><i
+                                            class="bi bi-caret-right"></i>
+                                        Thêm sản phẩm
+                                    </a>
+
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#categoryCollapse" role="button"
+                                aria-expanded="false" aria-controls="categoryCollapse">
+                                <i class="bi bi-tags"></i> Nhãn hàng
+                                <i class="bi bi-chevron-right rotate ms-auto smaller-icon"></i>
+                            </a>
+                            <div class="collapse" id="categoryCollapse" data-bs-parent="#sidebarMenu">
+                                <div class="collapse-inner">
+                                    <a class="nav-link" href="/project1/admin/products/brand.php"><i
+                                            class="bi bi-caret-right"></i>
+                                        Thêm nhãn hàng
+                                    </a>
+                                    <a class="nav-link" href="/project1/admin/products/brand_list.php"><i
+                                            class="bi bi-caret-right"></i>
+                                        Danh sách nhãn hàng
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#orderCollapse" role="button"
+                                aria-expanded="false" aria-controls="orderCollapse">
+                                <i class="bi bi-box-seam"></i> Hóa đơn
+                                <i class="bi bi-chevron-right rotate ms-auto smaller-icon"></i>
+                            </a>
+                            <div class="collapse" id="orderCollapse" data-bs-parent="#sidebarMenu">
+                                <div class="collapse-inner">
+                                    <a class="nav-link" href="/project1/admin/order/index.php"><i
+                                            class="bi bi-caret-right"></i>
+                                        Duyệt hóa đơn
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="sidebar-heading">SETTING</div>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#settingCollapse" role="button"
+                                aria-expanded="false" aria-controls="settingCollapse">
+                                <i class="bi bi-gear"></i> Cài đặt
+                                <i class="bi bi-chevron-right rotate ms-auto smaller-icon"></i>
+                            </a>
+                            <div class="collapse" id="settingCollapse" data-bs-parent="#sidebarMenu">
+                                <div class="collapse-inner">
+                                    <form method="POST" action="/project1/admin/auth/logout_process.php">
+                                        <button name="submit" class="nav-link">
+                                            <i class="bi bi-caret-right"></i> Đăng suất
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main class="main-content col">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h2 class="card-title mb-4">Thêm sản phẩm</h2>
+                                    <form method='POST' action="/project1/admin/products/create_process.php"
+                                        enctype="multipart/form-data">
+                                        <div class="mb-3">
+                                            <label for="product_code" class="form-label">Mã sản phẩm</label>
+                                            <input type="text" class="form-control" id="product_code"
+                                                name='product_code' required />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Tên sản phẩm</label>
+                                            <input type="text" class="form-control" id="name" name='name' required />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="price" class="form-label">Giá sản phẩm</label>
+                                            <input type="number" step="1" min="0" class="form-control" id="price"
+                                                name='price' required />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="description" class="form-label">Mô tả sản phẩm</label>
+                                            <textarea rows="5" class="form-control" id="description"
+                                                name="description"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="image_file" class="form-label">Ảnh sản phẩm</label>
+                                            <input type="file" class="form-control" id="image_file" name='image_file' />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="image" class="form-label">Link ảnh sản phẩm</label>
+                                            <input type="text" class="form-control" id="image" name='image' />
+                                        </div>
+                                        <hr>
+                                        <h3 class="mb-3">Thông tin chi tiết sản phẩm</h3>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="cpu" class="form-label">CPU</label>
+                                                    <input type="text" class="form-control" id="cpu" name='cpu' />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="ram" class="form-label">RAM</label>
+                                                    <input type="text" class="form-control" id="ram" name='ram' />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="hard_drive" class="form-label">Ổ cứng</label>
+                                                    <input type="text" class="form-control" id="hard_drive"
+                                                        name='hard_drive' />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="screen" class="form-label">Màn hình</label>
+                                                    <input type="text" class="form-control" id="screen" name='screen' />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="graphics_card" class="form-label">Card đồ họa</label>
+                                                    <input type="text" class="form-control" id="graphics_card"
+                                                        name='graphics_card' />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="ports" class="form-label">Các cổng kết nối</label>
+                                                    <input type="text" class="form-control" id="ports" name='ports' />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="operating_system" class="form-label">Hệ điều
+                                                        hành</label>
+                                                    <input type="text" class="form-control" id="operating_system"
+                                                        name='operating_system' />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="design" class="form-label">Thiết kế</label>
+                                                    <input type="text" class="form-control" id="design" name='design' />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="dimensions" class="form-label">Kích thước</label>
+                                                    <input type="text" class="form-control" id="dimensions"
+                                                        name='dimensions' />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="launch_date" class="form-label">Ngày ra mắt</label>
+                                                    <input type="date" class="form-control" id="launch_date"
+                                                        name='launch_date' />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+
+
         </div>
-        <!-- CONTENT END -->
     </div>
-    <!-- Bảng mã JavaScript Bootstrap và jQuery -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="/project1/js/admin.js"></script>
 </body>
 
 </html>

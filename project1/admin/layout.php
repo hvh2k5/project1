@@ -22,7 +22,7 @@ if (!isset($_SESSION['auth']['admin_email'])) {
 </head>
 
 <body>
-<header>
+    <header>
         <div class="logo">
             <a href="/project1/admin/home.php" class="nav-link">
                 <img src="/project1/public/img/logo.png" alt="Logo" class="rounded" width="50px">
@@ -136,66 +136,7 @@ if (!isset($_SESSION['auth']['admin_email'])) {
                 </div>
             </nav>
             <main class="main-content col">
-                <div class="row row-cols-1 row-cols-md-2 g-4">
-                    <!-- Danh sách sản phẩm -->
-                    <div class="col">
-                        <div class="card h-100 shadow-lg">
-                            <div class="card-body d-flex align-items-center">
-                                <i class="bi bi-inboxes fs-3 text-primary me-3"></i>
-                                <div>
-                                    <h5 class="card-title">Danh sách sản phẩm</h5>
-                                    <p class="card-text">Xem danh sách các sản phẩm hiện có trong cửa hàng.</p>
-                                    <a href="/project1/admin/products/product_list.php" class="btn btn-primary">Xem
-                                        chi tiết</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Thêm sản phẩm -->
-                    <div class="col">
-                        <div class="card h-100 shadow-lg">
-                            <div class="card-body d-flex align-items-center">
-                                <i class="bi bi-plus-circle fs-3 text-success me-3"></i>
-                                <div>
-                                    <h5 class="card-title">Thêm sản phẩm</h5>
-                                    <p class="card-text">Thêm sản phẩm mới vào cửa hàng.</p>
-                                    <a href="/project1/admin/products/create.php" class="btn btn-success">Thêm sản
-                                        phẩm</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Duyệt hóa đơn -->
-                    <div class="col">
-                        <div class="card h-100 shadow-lg">
-                            <div class="card-body d-flex align-items-center">
-                                <i class="bi bi-box-seam fs-3 text-warning me-3"></i>
-                                <div>
-                                    <h5 class="card-title">Duyệt hóa đơn</h5>
-                                    <p class="card-text">Duyệt và xử lý các hóa đơn mới từ khách hàng.</p>
-                                    <a href="/project1/admin/order/index.php" class="btn btn-warning">Duyệt hóa
-                                        đơn</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Thêm chi tiết sản phẩm -->
-                    <div class="col">
-                        <div class="card h-100 shadow-lg">
-                            <div class="card-body d-flex align-items-center">
-                                <i class="bi bi-file-earmark-plus fs-3 text-info me-3"></i>
-                                <div>
-                                    <h5 class="card-title">Thêm chi tiết sản phẩm</h5>
-                                    <p class="card-text">Thêm thông tin chi tiết cho sản phẩm.</p>
-                                    <a href="#" class="btn btn-info">Thêm chi tiết</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </main>
         </div>
     </div>

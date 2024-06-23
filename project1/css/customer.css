@@ -43,7 +43,7 @@ header {
 .search-bar input {
     border: none;
     padding: 5px;
-    border-radius: 6px 0 0 6px;                     /* Góc bo tròn cho trường nhập liệu */
+    border-radius: 6px 0 0 6px;                     
 }
 
 .search-bar button {
@@ -145,4 +145,5 @@ header {
   .product-details td {
       background-color: #f9f9f9;
   }
+  
   
